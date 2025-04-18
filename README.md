@@ -31,7 +31,135 @@ We use this categorical data encoding technique when the features are nominal(do
 • Yeojohnson method
 
 # CODING AND OUTPUT:
-       # INCLUDE YOUR CODING AND OUTPUT SCREENSHOTS HERE
+
+Done by : ROHIT GP - 212224220082 / 24900185
+
+```
+import pandas as pd
+from scipy import stats
+import numpy as np
+df=pd.read_csv("/content/Encoding Data (2).csv")
+df
+```
+![Screenshot 2025-04-18 082620](https://github.com/user-attachments/assets/23b5d6de-4b6d-4fda-aeac-6c38fe2d6502)
+```
+from sklearn.preprocessing import LabelEncoder,OrdinalEncoder,OneHotEncoder
+pm=['Hot','Warm','Cold']
+e1=OrdinalEncoder(categories=[pm])
+e1.fit_transform(df[["ord_2"]])
+```
+![Screenshot 2025-04-18 082741](https://github.com/user-attachments/assets/b5792348-e1c4-4c10-94af-583abf6fc7b4)
+```
+df['bo2']=e1.fit_transform(df[["ord_2"]])
+df
+```
+```
+le=LabelEncoder()
+dfc=df.copy()
+dfc['ord_2']=le.fit_transform(dfc['ord_2'])
+dfc
+```
+```
+ohe=OneHotEncoder(sparse_output=False)
+df2=df.copy()
+enc=pd.DataFrame(ohe.fit_transform(df2[['nom_0']]))
+df2=pd.concat([df2,enc],axis=1)
+df2
+```
+```
+pd.get_dummies(df2,columns=['nom_0'])
+```
+```
+from category_encoders import BinaryEncoder
+df=pd.read_csv("/content/data (2).csv")
+df
+```
+```
+be=BinaryEncoder()
+nd=be.fit_transform(df['Ord_2'])
+dfb=pd.concat([df,nd],axis=1)
+dfb1=df.copy()
+dfb
+```
+```
+from category_encoders import TargetEncoder
+te=TargetEncoder()
+cc=df.copy()
+new=te.fit_transform(X=cc["City"],y=cc["Target"])
+cc=pd.concat([cc,new],axis=1)
+cc
+```
+```
+df=pd.read_csv("/content/Data_to_Transform (1).csv")
+df
+```
+```
+df.skew()
+```
+```
+np.log(df["Highly Positive Skew"])
+```
+```
+np.reciprocal(df["Moderate Positive Skew"])
+```
+```
+np.sqrt(df["Highly Positive Skew"])
+```
+```
+np.square(df["Highly Positive Skew"])
+```
+```
+df["Highly Positive Skew_boxcox"],parameters=stats.boxcox(df["Highly Positive Skew"])
+df
+```
+```
+df["Moderate Negative Skew_yeojohnson"],parameters=stats.yeojohnson(df["Moderate Negative Skew"])
+df.skew()
+```
+```
+df["Highly Negative Skew_yeojohnson"],parameters=stats.yeojohnson(df["Highly Negative Skew"])
+df.skew()
+```
+```
+from sklearn.preprocessing import QuantileTransformer
+qt=QuantileTransformer(output_distribution='normal')
+df["Moderate Negative Skew_1"]=qt.fit_transform(df[["Moderate Negative Skew"]])
+df
+```
+```
+import seaborn as sns
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+sm.qqplot(df["Moderate Negative Skew"],line="45")
+plt.show()
+```
+```
+sm.qqplot(np.reciprocal(df["Moderate Negative Skew"]),line='45')
+plt.show()
+```
+```
+df["Moderate Negative Skew"]=qt.fit_transform(df[["Moderate Negative Skew"]])
+sm.qqplot(df["Moderate Negative Skew"],line='45')
+plt.show() 
+```
+```
+df['Highly Negative Skew_1']=qt.fit_transform(df[["Highly Negative Skew"]])
+sm.qqplot(df['Highly Negative Skew'],line='45')
+plt.show()
+```
+```
+sm.qqplot(df['Highly Negative Skew_1'],line='45')
+plt.show()
+```
+```
+dt=pd.read_csv("/content/titanic_dataset (2).csv")
+from sklearn.preprocessing import QuantileTransformer
+qt=QuantileTransformer(output_distribution='normal',n_quantiles=891)
+dt["Age_1"]=qt.fit_transform(dt[["Age"]])
+sm.qqplot(dt['Age_1'],line='45')
+plt.show()
+```
+
 # RESULT:
        # INCLUDE YOUR RESULT HERE
 
